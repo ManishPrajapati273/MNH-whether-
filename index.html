@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css" type="text/css" />
+  <title>Day by Day Time Clock</title>
+</head>
+<body>
+  <div class="Clock">
+    <h1 id="time">--:--:--</h1>
+    <p id="date">Loading date...</p>
+    <p id="day">Loading day...</p>
+  </div>
+
+  <h2 id="time-info">Good __!</h2> <!-- Greeting (centered) -->
+
+  <div class="container">
+    <h2>Jhansi Weather</h2>
+    <div class="temperature" id="temperature">-- °C</div>
+    <div class="weather" id="weather">Loading weather data...</div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="card">
+        <!-- Logo Section -->
+        <img class="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfzcOihXNFJSBJBham0lKJffpHyijSvZPOGzKN_mU&s=0" alt="Logo">
+
+        <!-- Information Section -->
+        <div class="info">
+            <p>Lunar Eclipse Information</p>
+            <div class="date-time" id="dateTime"></div>
+            <div class="moon-phase" id="moonPhase"></div>
+            <div class="eclipse-info" id="eclipseInfo"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simulate a lunar phase API with static data
+        const moonPhaseAPI = {
+            getMoonPhase: function() {
+                // Get current date
+                const currentDate = new Date();
+                const dayOfYear = Math.floor((currentDate - new Date(currentDate.getFullYear(), 0, 0)) / 86400000);
+
+                // Simulating moon phase data (using a simple pattern for the example)
+                const moonPhases = [
+                    'New Moon', 'First Quarter', 'Full Moon', 'Last Quarter'
+                ];
+
+                const phase = moonPhases[dayOfYear % 4]; // Cycle through the phases
+                const isEclipse = dayOfYear % 30 === 0; // Simulate an eclipse every 30 days
+
+                return { phase, isEclipse };
+            },
+            getDateTime: function() {
+                const now = new Date();
+                return now.toLocaleString();
+            }
+        };
+
+        // Fetch and display data on the page
+        function updateLunarInfo() {
+            // Get moon phase and eclipse info
+            const lunarData = moonPhaseAPI.getMoonPhase();
+            const currentDateTime = moonPhaseAPI.getDateTime();
+
+            // Display date and time
+            document.getElementById('dateTime').innerHTML = `Current Date and Time: ${currentDateTime}`;
+
+            // Display moon phase
+            document.getElementById('moonPhase').innerHTML = `Current Moon Phase: ${lunarData.phase}`;
+
+            // Display eclipse information
+            const eclipseMessage = lunarData.isEclipse
+                ? 'A Lunar Eclipse is happening today!'
+                : 'No Lunar Eclipse today.';
+            document.getElementById('eclipseInfo').innerHTML = eclipseMessage;
+        }
+
+        // Update information every second
+        setInterval(updateLunarInfo, 1000);
+        updateLunarInfo(); // Initial call to update right away
+    </script>
+
+
+
+  <script src="script.js"></script>
+</body>
+</html>
